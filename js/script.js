@@ -103,15 +103,10 @@ document.addEventListener('DOMContentLoaded', function () {
     navLinks.forEach(function (link) {
       link.classList.remove('active');
       var href = link.getAttribute('href');
-      // Handle same-page anchor links (e.g., #donate, #volunteer)
-      if (href && href.startsWith('#')) {
-        var section = document.querySelector('section[id="' + href.slice(1) + '"]');
-        if (section && currentPage === 'index.html') {
-          // Only auto-highlight on homepage for same-page anchors
-        }
-      }
-      // Check if the link href matches the current page
-      if (href === currentPage) {
+      // Extract just the filename from href (handles ../about.html, ./about.html, about.html, etc.)
+      var hrefFile = href ? href.split('/').pop().split('#')[0] : '';
+      // Check if the link's filename matches the current page
+      if (hrefFile === currentPage) {
         link.classList.add('active');
       }
     });
@@ -127,12 +122,17 @@ document.addEventListener('DOMContentLoaded', function () {
       var sections = document.querySelectorAll('section[id]');
       var scrollPos = window.scrollY + 200;
       sections.forEach(function (section) {
-        var top = section.offsetTop;
+        var rect = section.getBoundingClientRect();
+        var top = rect.top + window.scrollY;
         var bottom = top + section.offsetHeight;
         var id = section.getAttribute('id');
         navLinks.forEach(function (link) {
           var href = link.getAttribute('href');
-          if (href === '#' + id && scrollPos >= top && scrollPos < bottom) {
+          // Extract filename from href and check for hash-only links
+          var hrefFile = href ? href.split('/').pop().split('#')[0] : '';
+          var hrefHash = href ? (href.startsWith('#') ? href : '#' + href.split('#')[1]) : '';
+          // Match hash anchors on the homepage
+          if (hrefHash === '#' + id && scrollPos >= top && scrollPos < bottom) {
             navLinks.forEach(function (l) { l.classList.remove('active'); });
             link.classList.add('active');
           }
@@ -403,22 +403,21 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ============================================================
-  // 14. PARALLAX HERO (desktop only)
+  // 14. PARALLAX HERO (desktop only — width check on every scroll)
   // ============================================================
-  if (window.innerWidth > 768) {
-    window.addEventListener('scroll', function () {
-      const hero = document.querySelector('.hero');
-      if (!hero) return;
-      const scrolled = window.scrollY;
-      const slideshow = hero.querySelector('.hero-bg-slideshow');
-      const content = hero.querySelector('.hero-content');
-      if (slideshow) slideshow.style.transform = 'translateY(' + (scrolled * 0.25) + 'px)';
-      if (content) {
-        content.style.transform = 'translateY(' + (-scrolled * 0.12) + 'px)';
-        content.style.opacity = Math.max(1 - (scrolled / 600), 0.3);
-      }
-    }, { passive: true });
-  }
+  window.addEventListener('scroll', function () {
+    if (window.innerWidth <= 768) return;
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    const scrolled = window.scrollY;
+    const slideshow = hero.querySelector('.hero-bg-slideshow');
+    const content = hero.querySelector('.hero-content');
+    if (slideshow) slideshow.style.transform = 'translateY(' + (scrolled * 0.25) + 'px)';
+    if (content) {
+      content.style.transform = 'translateY(' + (-scrolled * 0.12) + 'px)';
+      content.style.opacity = Math.max(1 - (scrolled / 600), 0.3);
+    }
+  }, { passive: true });
 
   // ============================================================
   // 15. DONATE BUTTON ON DONATE CARD
@@ -433,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // ============================================================
-  // 16. HERO PARALLAX ON RESIZE
+  // 16. RESIZE — clear parallax transforms when switching to mobile
   // ============================================================
   let resizeTimer;
   window.addEventListener('resize', function () {
