@@ -1,0 +1,24 @@
+<svg width="1200" height="360" viewBox="0 0 1200 360" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mfGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8bb81c"/>
+      <stop offset="25%" stop-color="#6cb50d"/>
+      <stop offset="50%" stop-color="#1a9148"/>
+      <stop offset="75%" stop-color="#07688f"/>
+      <stop offset="100%" stop-color="#e38717"/>
+    </linearGradient>
+  </defs>
+  <!-- Icon -->
+  <g transform="translate(50,45)">
+    <rect x="20" y="20" width="55" height="55" rx="12" transform="rotate(45 47 47)" fill="#8bb81c"/>
+    <rect x="95" y="20" width="55" height="55" rx="12" transform="rotate(45 122 47)" fill="#6cb50d"/>
+    <rect x="170" y="20" width="55" height="55" rx="12" transform="rotate(45 197 47)" fill="#1a9148"/>
+    <rect x="58" y="95" width="55" height="55" rx="12" transform="rotate(45 85 122)" fill="#07688f"/>
+    <rect x="132" y="95" width="55" height="55" rx="12" transform="rotate(45 159 122)" fill="#e38717"/>
+    <rect x="95" y="170" width="55" height="55" rx="12" transform="rotate(45 122 197)" fill="url(#mfGrad)"/>
+  </g>
+  <text x="360" y="130" font-family="Montserrat, Arial, sans-serif" font-size="82" font-weight="800" fill="#111111">MASKARWADI</text>
+  <text x="365" y="190" font-family="Montserrat, Arial, sans-serif" font-size="30" font-weight="500" letter-spacing="14" fill="#4B5563">FOUNDATION</text>
+  <rect x="365" y="215" width="340" height="5" rx="3" fill="url(#mfGrad)"/>
+  <text x="365" y="260" font-family="Montserrat, Arial, sans-serif" font-size="21" font-style="italic" fill="#6B7280">Together Towards a Better Tomorrow</text>
+</svg>
