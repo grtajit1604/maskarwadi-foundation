@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "workspace": {
+    "name": "maskarwadi Foundation",
+    "createdAt": 1782225972142,
+    "preset": "starter"
+  },
+  "authorizedRoots": [
+    "D:\\maskarwadi Foundation"
+  ],
+  "reload": null
+}
